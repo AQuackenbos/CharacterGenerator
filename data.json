@@ -1,0 +1,22 @@
+{
+	"eyeTypes": {
+		"identifier": "eyeType",	
+		"label": "Eye Type",
+		"disallow": [],
+		"options": [
+			{"value":"rounded","label":"Rounded"},
+			{"value":"narrow","label":"Narrow"},
+			{"value":"wide","label":"Wide"}
+		]
+	},
+	"eyeColor": {
+		"identifier": "eyeColor",
+		"label": "Eye Color",
+		"disallow": [],
+		"options": [
+			{"value":"blue","label":"Blue"},
+			{"value":"green","label":"Green"},
+			{"value":"brown","label":"Brown"}
+		]
+	}
+}

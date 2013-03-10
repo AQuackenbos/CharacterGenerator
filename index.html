@@ -1,0 +1,51 @@
+<!doctype html>
+
+<html>
+	<head>
+		<title>Character Description Generator</title>
+		<link type="text/css" rel="stylesheet" href="css/bootstrap.css"/>
+		<link type="text/css" rel="stylesheet" href="css/main.css"/>
+	</head>
+	<body>
+		<div class="row-fluid">
+			<div class="pagination-centered span12">
+				<div id="filterArea" class="row-fluid"></div>
+				<div id="filterActions" class="row-fluid">
+					<button class="btn btn-success span12" name="randomize" id="btn-randomize">Create Description</button>
+					<button class="btn btn-info span6" name="again" id="btn-again">Randomize Again</button>
+					<button class="btn btn-warning span6" name="refilter" id="btn-refilter">Choose New Filters</button>
+				</div>
+				<div id="results" class="row-fluid"></div>
+			</div>
+		</div>
+		
+		<script id="template-filter" type="text/x-handlebars-template">
+			<div class="filter-entry span3">
+				<input name="identifier-{{identifier}}" id="identifier-{{identifier}}" value="{{identifier}}" type="hidden"/>
+				<label for="type-{{identifier}}" id="label-{{identifier}}">{{label}}</label>
+				<select name="type-{{identifier}}" id="type-{{identifier}}">
+					{{selectOptions disallow}}
+				</select>
+				<select name="options-{{identitifer}}" id="options-{{identifier}}" multiple disabled>
+					{{#each options}}
+						<option value="{{value}}">{{label}}</option>
+					{{/each}}
+				</select>
+			</div>
+		</script>
+		
+		<script id="template-result" type="text/x-handlebars-template">
+			<div class="result span3">
+				<strong>{{label}}: </strong>{{value}}<br />
+				(image_goes_here)
+				{{#if image}}
+					<img src="{{image}}" alt="{{value}}"/>
+				{{/if}}
+			</div>
+		</script>
+		
+		<script type="text/javascript" src="js/jquery-1.9.1.js"></script>
+		<script type="text/javascript" src="js/handlebars.js"></script>
+		<script type="text/javascript" src="js/main.js"></script>
+	</body>
+</html>
