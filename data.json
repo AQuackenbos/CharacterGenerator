@@ -1,22 +1,74 @@
-{
-	"eyeType": {
-		"identifier": "eyeType",	
-		"label": "Eye Type",
-		"disallow": [],
-		"options": [
-			{"value":"rounded","label":"Rounded"},
-			{"value":"narrow","label":"Narrow"},
-			{"value":"wide","label":"Wide"}
+[
+	{
+		"identifier": "body",
+		"label": "Body",
+		"filters": [
+			{
+				"identifier": "sex",
+				"label": "Sex",
+				"disallow": ["none","limited"],
+				"options": [
+					{"value":"male","label":"Male"},
+					{"value":"female","label":"Female"}
+				]
+			},
+			{
+				"identifier": "skintone",
+				"label": "Skin Tone",
+				"disallow":[],
+				"options": [
+					{"value":"pale","label":"Pale"},
+					{"value":"fair","label":"Fair"},
+					{"value":"average","label":"Average"},
+					{"value":"dark","label":"Dark"}
+				]
+			}
 		]
 	},
-	"eyeColor": {
-		"identifier": "eyeColor",
-		"label": "Eye Color",
-		"disallow": [],
-		"options": [
-			{"value":"blue","label":"Blue"},
-			{"value":"green","label":"Green"},
-			{"value":"brown","label":"Brown"}
+	{
+		"identifier": "head",
+		"label": "Head"
+	},
+	{
+		"identifier": "eyes",
+		"label": "Eyes",
+		"filters": [
+			{
+				"identifier": "shape",	
+				"label": "Shape",
+				"options": [
+					{"value":"rounded","label":"Rounded"},
+					{"value":"narrow","label":"Narrow"},
+					{"value":"wide","label":"Wide"}
+				]
+			},
+			{
+				"identifier": "color",
+				"label": "Color",
+				"options": [
+					{"value":"blue","label":"Blue"},
+					{"value":"green","label":"Green"},
+					{"value":"brown","label":"Brown"}
+				]
+			},
+			{
+				"identifier": "width",
+				"label": "Width",
+				"options": [
+					{"value":"narrow","label":"Narrow"},
+					{"value":"medium","label":"Medium"},
+					{"value":"wide","label":"Wide"}
+				]
+			},
+			{
+				"identifier": "shadow",
+				"label": "Eyeshadow",
+				"options": [
+					{"value":"none","label":"None"},
+					{"value":"light","label":"Light"},
+					{"value":"heavy","label":"Heavy"}
+				]
+			}
 		]
 	}
-}
+]

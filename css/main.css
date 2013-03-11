@@ -20,3 +20,7 @@
     -ms-transition: background-color 100ms linear;
     transition: background-color 100ms linear;
 }
+
+img {
+	max-width: 100%;
+}
