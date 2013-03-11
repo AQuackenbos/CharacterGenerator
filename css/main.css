@@ -21,6 +21,130 @@
     transition: background-color 100ms linear;
 }
 
+.filter-entry select {
+	vertical-align: top;
+}
+
 img {
 	max-width: 100%;
+}
+
+.filter-group h3 {
+	text-align: left;
+	border-radius: 6px;
+	padding-left: 25px;
+	background-color: rgb(225, 240, 248);
+    -webkit-transition: background-color 100ms linear;
+    -moz-transition: background-color 100ms linear;
+    -o-transition: background-color 100ms linear;
+    -ms-transition: background-color 100ms linear;
+    transition: background-color 100ms linear;
+}
+
+.filter-group:hover h3 {
+	background-color: rgb(155, 206, 233);
+    -webkit-transition: background-color 100ms linear;
+    -moz-transition: background-color 100ms linear;
+    -o-transition: background-color 100ms linear;
+    -ms-transition: background-color 100ms linear;
+    transition: background-color 100ms linear;
+}
+
+.character-floater {
+	position: fixed;
+	z-index: 100;
+	min-width: 250px;
+	cursor: pointer;
+	bottom: 15px;
+	right: 15px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	background-color: #fefefe;
+    -webkit-transition: background-color 100ms linear;
+    -moz-transition: background-color 100ms linear;
+    -o-transition: background-color 100ms linear;
+    -ms-transition: background-color 100ms linear;
+    transition: background-color 100ms linear;
+}
+
+.character-floater:hover {
+	background-color: #f9f9f9;
+    -webkit-transition: background-color 100ms linear;
+    -moz-transition: background-color 100ms linear;
+    -o-transition: background-color 100ms linear;
+    -ms-transition: background-color 100ms linear;
+    transition: background-color 100ms linear;
+}
+
+.character-floater.open {
+	border: 1px solid #888;
+	background-color: #efefef;
+    -webkit-transition: background-color 100ms linear;
+    -moz-transition: background-color 100ms linear;
+    -o-transition: background-color 100ms linear;
+    -ms-transition: background-color 100ms linear;
+    transition: background-color 100ms linear;
+}
+
+.character-floater-header {
+	text-align: center;
+	padding: 5px;
+	border-bottom: 1px dotted #ddd;
+}
+
+.character-floater-footer {
+	border-top: 1px dotted #ddd;
+	clear: both;
+}
+
+.character-list {
+	list-style: none;
+	margin: 0;
+}
+
+.character-list .message {
+	padding: 10px;
+	padding-left: 25px;
+	color: #999999;
+}
+
+.character-list .character {
+	min-height: 40px;
+	line-height: 40px;
+	width: 100%;
+	background-color: rgb(64, 178, 211);
+	color: #fff;
+    -webkit-transition: background-color 100ms linear;
+    -moz-transition: background-color 100ms linear;
+    -o-transition: background-color 100ms linear;
+    -ms-transition: background-color 100ms linear;
+    transition: background-color 100ms linear;
+}
+
+.character-list .character:hover {
+	background-color: #2f96b4;
+    -webkit-transition: background-color 100ms linear;
+    -moz-transition: background-color 100ms linear;
+    -o-transition: background-color 100ms linear;
+    -ms-transition: background-color 100ms linear;
+    transition: background-color 100ms linear;
+}
+
+.character-list .character .name {
+	color: #fff;
+	padding-left: 20px;
+	float: left;
+	display: block;
+	width: 70%;
+	text-decoration: none;
+}
+
+.character-list .character .load,
+.character-list .character .delete {
+	float: right;
+	margin: 5px;
+}
+
+.modal .character-name {
+	width: 95%;
 }

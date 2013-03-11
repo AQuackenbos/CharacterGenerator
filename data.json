@@ -27,7 +27,10 @@
 	},
 	{
 		"identifier": "head",
-		"label": "Head"
+		"label": "Head",
+		"filters": [
+			
+		]
 	},
 	{
 		"identifier": "eyes",

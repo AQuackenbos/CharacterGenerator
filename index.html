@@ -13,12 +13,77 @@
 			<h1>Character Description Generator</h1>
 			<div id="filterArea" class="row-fluid"></div>
 			<div id="filterActions" class="row-fluid">
-				<button class="btn btn-success span12" name="randomize" id="btn-randomize">Create Description</button>
-				<button class="btn btn-info span6" name="again" id="btn-again">Randomize Again</button>
-				<button class="btn btn-warning span6" name="refilter" id="btn-refilter">Choose New Filters</button>
+				<button class="btn btn-success span12" id="btn-randomize">Create Description</button>
+				<button class="btn btn-info span4" id="btn-again">Randomize Again</button>
+				<button class="btn btn-warning span4" id="btn-refilter">Choose New Filters</button>
+				<a class="btn btn-success span4" id="btn-saveCharacter" href="#saveModal" role="button" data-toggle="modal">Save Character</a>
 			</div>
 			<div id="results" class="row-fluid"></div>
 		</div>
+		
+		<div class="character-floater hidden-phone">
+			<div class="character-floater-header">
+				Characters <span class="character-count badge badge-info">0</span>
+			</div>
+			<div class="character-floater-content" style="display:none">
+				<ul class="character-list">
+				</ul>
+			</div>
+			<div class="character-floater-footer">
+				&nbsp;
+			</div>
+		</div>
+		
+		<div class="modal hide fade" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="saveModalLabel" aria-hidden="true">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h3 id="saveModalLabel">Name and Save Character</h3>
+			</div>
+			<div class="modal-body">
+				<div class="modal-messages"></div>
+				<input type="text" name="characterName" class="character-name" value=""/>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn cancel" data-dismiss="modal" aria-hidden="true">Cancel</a>
+				<a href="#" class="btn btn-primary save">Save changes</a>
+			</div>
+		</div>
+		
+		<div class="modal hide fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h3 id="deleteModalLabel">Delete Character</h3>
+			</div>
+			<div class="modal-body">
+				<div class="modal-messages alert">Are you sure you want to delete this character?</div>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn cancel" data-dismiss="modal" aria-hidden="true">Cancel</a>
+				<a href="#" class="btn btn-danger confirm">Delete</a>
+			</div>
+		</div>
+		
+		<div class="modal hide fade" id="loadModal" tabindex="-1" role="dialog" aria-labelledby="loadModalLabel" aria-hidden="true">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h3 id="loadModalLabel">Load Character</h3>
+			</div>
+			<div class="modal-body">
+				<div class="modal-messages alert">Loading a character will delete any unsaved character data being displayed.  Continue?</div>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn cancel" data-dismiss="modal" aria-hidden="true">Cancel</a>
+				<a href="#" class="btn btn-primary confirm">Load</a>
+			</div>
+		</div>
+		
+		<script id="template-character" type="text/x-handlebars-template">
+			<li class="character">
+				<input type="hidden" value="{{id}}" class="character-id"/>
+				<a href="#loadModal" role="button" data-toggle="modal" class="name">{{name}}</a>
+				<a href="#deleteModal" role="button" data-toggle="modal" class="delete btn btn-danger"><i class="icon-trash icon-white"></i></a> 
+			</li>
+		</script>
 		
 		<script id="template-group" type="text/x-handlebars-template">
 			<div class="filter-group row-fluid" {{#unless filters}}style="display:none"{{/unless}}>
@@ -63,6 +128,7 @@
 		</script>
 		
 		<script type="text/javascript" src="js/jquery-1.9.1.js"></script>
+		<script type="text/javascript" src="js/bootstrap.js"></script>
 		<script type="text/javascript" src="js/handlebars.js"></script>
 		<script type="text/javascript" src="js/main.js"></script>
 	</body>
