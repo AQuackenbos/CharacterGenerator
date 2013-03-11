@@ -1,5 +1,5 @@
 {
-	"eyeTypes": {
+	"eyeType": {
 		"identifier": "eyeType",	
 		"label": "Eye Type",
 		"disallow": [],
