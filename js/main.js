@@ -1,8 +1,10 @@
 //Builds the character area
 function buildCharacterList()
 {
+     //load stored characters from from storage 
 	var characters = JSON.parse(localStorage.getItem("characters"));
 	
+     //clear list dom 
 	$(".character-floater .character-list").empty();
 	
 	if(characters == null) //no chars to load
@@ -12,13 +14,15 @@ function buildCharacterList()
 		return;
 	}
 	
+     //build entry for each character 
 	$(characters).each(function(idx,character){
 		if(character == null) return true; //continue;
 		
 		var template = Handlebars.compile($("#template-character").html());
 		$(template({id:idx,name:character.name}).trim()).appendTo(".character-floater .character-list");
 	});
-	
+
+	//update count html
 	$(".character-floater .character-count").html($(".character-floater .character-list .character").size());
 	
 	if($(".character-floater .character-list .character").size() == 0) //no chars left in list
@@ -31,17 +35,23 @@ function buildCharacterList()
 //Loads a character
 function loadCharacter(character)
 {
+     //clear all result html 
 	resetResults();
+     //disable save button 
 	$("#btn-saveCharacter").prop("disabled",true).addClass("disabled").html("Saved!");
-
+ 
+     //if the filters are visible, hide them. 
 	if($($(".filter-group")[0]).is(":visible"))
 	{
 		slideAndFade($(".filter-group").get().reverse());
 		slideAndFade($(".filter-entry").get().reverse());
 	}
 		
+     //update button area 
 	$("#btn-randomize").hide("medium");
 	$("#btn-again,#btn-refilter,#btn-saveCharacter,#results").show("medium");
+
+     //now draw results 
 	$(character.groups).each(function(gidx,group){
 		var template = Handlebars.compile($("#template-group-result").html());
 		$(template(group).trim()).hide().appendTo("#results").delay( gidx * 250 ).animate({
@@ -49,7 +59,7 @@ function loadCharacter(character)
 			}, 250);
 	});
 	
-	
+	//attach name 
 	$("<h4>",{class:"characterName"}).html(character.name).prependTo("#results");
 }
 
@@ -57,48 +67,62 @@ function loadCharacter(character)
 function resetResults()
 {
 	$("#results").empty();
+     //reset save button 
 	$("#btn-saveCharacter").prop("disabled",false).removeClass("disabled").html("Save Character");
 }
 
 //Generate the character
 function randomize()
-{
+{   
+     //refresh dom 
 	resetResults();
-	
+
+     //reset temp storage 
 	window.currentCharacter = {}
 	window.currentCharacter.groups = [];
 	
+     //collect data by group 
 	$(".filter-group").each(function(gidx,r){
 		var row = $(r);
 		
 		var results = [];
 		if(!window.availableFilters[gidx].filters) return true;
 		
+          //gather each item value 
 		row.find(".filter-entry").each(function(idx,entry){
 		
+               //figure out what set of values to work with 
 			var type = $(this).find("select.type").val();
 			var options = window.availableFilters[gidx].filters[idx].options;
 			
 			if(type == 'none') return true;
 			
+               //pick the options to random from 
 			var limiter = $.makeArray($(this).find("select.options").val());
-			
+
+               //check if the set will change 			
 			if(type == 'limited' || type == 'set')
 			{
-				options = $.map(options, function(item, idx) {
+                    //remove unrequested possibilities 
+				options = $.map(options, function(item, idx) { 
 					return (limiter.indexOf(item.value) != -1) ? item : null;
 				});
 			}
+
+               //random value 
 			var selected = options[Math.floor(Math.random() * options.length)];
 			
+               //prepare result
 			var result = {};
 			
+               //store all related data 
 			result.group = window.availableFilters[gidx].identifier;
 			result.identifier = selected.value;
 			result.label = $(this).find("label").html();
 			result.value = selected.label;
 			result.image = "img/"+result.group+"/"+result.identifier+".png";
 			
+               //add to group list 
 			results.push(result);
 		});
 		
@@ -111,6 +135,7 @@ function randomize()
 		//Save group
 		window.currentCharacter.groups.push(groupResult);
 		
+          //render 
 		var template = Handlebars.compile($("#template-group-result").html());
 		$(template(groupResult).trim()).hide().appendTo("#results").delay( gidx * 250 ).animate({
 			"height": "toggle", "opacity": "toggle" 
@@ -118,6 +143,7 @@ function randomize()
 	});
 }
 
+//animation sequence DRY 
 function slideAndFade(selector)
 {
 	$(selector).each(function(idx) {
@@ -330,7 +356,7 @@ $(function(){
 			
 			$("<h4>",{class:"characterName"}).html(characterName.trim()).prependTo("#results");
 			
-			$(this).prop('disabled',true).html("Saved!");
+			$(this).closest(".modal").find(".character-name").val("");
 			$("#btn-saveCharacter").prop('disabled',true).addClass("disabled").html("Saved!");
 		})
 		//Handle Load Modal
