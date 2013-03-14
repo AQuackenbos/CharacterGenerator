@@ -1,10 +1,58 @@
+//Intro Sequence
+function runIntroSequence()
+{
+	var newHeaderHtml = "";
+	
+	//create selectable elements to animate
+	$($('h1#title').html().split('')).each(function(idx,letter){
+		newHeaderHtml += $('<span>',{class:"title-letter"}).html(letter)[0].outerHTML;
+	});
+	
+	//update header
+	$('h1#title').html(newHeaderHtml).css('color','white');
+	
+	//create color list
+	var colors = [
+		"rgb(125,125,200)", //blue
+		"rgb(230,75,75)", //pale red
+		"rgb(130,225,75)", //pastel green
+		"rgb(225,120,250)", //pinkish purple
+		"rgb(245,230,100)", //pastel yellow
+		"rgb(235,160,80)", //orangeish
+		"rgb(100,200,225)", //light blue
+	];
+	
+	var letterCount = $('h1#title span.title-letter').size();
+	
+	//animate each
+	$('h1#title span.title-letter').each(function(idx,letter){
+		var color = colors[Math.floor(Math.random() * colors.length)];
+		
+		$(this).delay( idx * 75 ).animate({
+			"color": color
+		}, 200);
+		
+		if(idx > 0)
+		{
+			$($('h1#title span.title-letter')[idx-1]).animate({
+				"color": "black"
+			}, 200).removeAttr('style');
+		}
+	});
+	
+	
+	$('h1#title span.title-letter').last().animate({
+		"color": "black"
+	}, 200);
+}
+
 //Builds the character area
 function buildCharacterList()
 {
-     //load stored characters from from storage 
+	 //load stored characters from from storage 
 	var characters = JSON.parse(localStorage.getItem("characters"));
 	
-     //clear list dom 
+	 //clear list dom 
 	$(".character-floater .character-list").empty();
 	
 	if(characters == null) //no chars to load
@@ -14,7 +62,7 @@ function buildCharacterList()
 		return;
 	}
 	
-     //build entry for each character 
+	 //build entry for each character 
 	$(characters).each(function(idx,character){
 		if(character == null) return true; //continue;
 		
@@ -35,23 +83,23 @@ function buildCharacterList()
 //Loads a character
 function loadCharacter(character)
 {
-     //clear all result html 
+	//clear all result html 
 	resetResults();
-     //disable save button 
+	 //disable save button 
 	$("#btn-saveCharacter").prop("disabled",true).addClass("disabled").html("Saved!");
  
-     //if the filters are visible, hide them. 
+	//if the filters are visible, hide them. 
 	if($($(".filter-group")[0]).is(":visible"))
 	{
 		slideAndFade($(".filter-group").get().reverse());
 		slideAndFade($(".filter-entry").get().reverse());
 	}
 		
-     //update button area 
+	//update button area 
 	$("#btn-randomize").hide("medium");
 	$("#btn-again,#btn-refilter,#btn-saveCharacter,#results").show("medium");
 
-     //now draw results 
+	//now draw results 
 	$(character.groups).each(function(gidx,group){
 		var template = Handlebars.compile($("#template-group-result").html());
 		$(template(group).trim()).hide().appendTo("#results").delay( gidx * 250 ).animate({
@@ -67,62 +115,62 @@ function loadCharacter(character)
 function resetResults()
 {
 	$("#results").empty();
-     //reset save button 
+	 //reset save button 
 	$("#btn-saveCharacter").prop("disabled",false).removeClass("disabled").html("Save Character");
 }
 
 //Generate the character
 function randomize()
 {   
-     //refresh dom 
+	//refresh dom 
 	resetResults();
 
-     //reset temp storage 
+	//reset temp storage 
 	window.currentCharacter = {}
 	window.currentCharacter.groups = [];
 	
-     //collect data by group 
+	//collect data by group 
 	$(".filter-group").each(function(gidx,r){
 		var row = $(r);
 		
 		var results = [];
 		if(!window.availableFilters[gidx].filters) return true;
 		
-          //gather each item value 
+		//gather each item value 
 		row.find(".filter-entry").each(function(idx,entry){
 		
-               //figure out what set of values to work with 
+			//figure out what set of values to work with 
 			var type = $(this).find("select.type").val();
 			var options = window.availableFilters[gidx].filters[idx].options;
 			
 			if(type == 'none') return true;
 			
-               //pick the options to random from 
+			//pick the options to random from 
 			var limiter = $.makeArray($(this).find("select.options").val());
 
-               //check if the set will change 			
+			//check if the set will change 			
 			if(type == 'limited' || type == 'set')
 			{
-                    //remove unrequested possibilities 
+					//remove unrequested possibilities 
 				options = $.map(options, function(item, idx) { 
 					return (limiter.indexOf(item.value) != -1) ? item : null;
 				});
 			}
 
-               //random value 
+			//random value 
 			var selected = options[Math.floor(Math.random() * options.length)];
 			
-               //prepare result
+			//prepare result
 			var result = {};
 			
-               //store all related data 
+			//store all related data 
 			result.group = window.availableFilters[gidx].identifier;
 			result.identifier = selected.value;
 			result.label = $(this).find("label").html();
 			result.value = selected.label;
 			result.image = "img/"+result.group+"/"+result.identifier+".png";
 			
-               //add to group list 
+			//add to group list 
 			results.push(result);
 		});
 		
@@ -135,7 +183,7 @@ function randomize()
 		//Save group
 		window.currentCharacter.groups.push(groupResult);
 		
-          //render 
+		//render 
 		var template = Handlebars.compile($("#template-group-result").html());
 		$(template(groupResult).trim()).hide().appendTo("#results").delay( gidx * 250 ).animate({
 			"height": "toggle", "opacity": "toggle" 
@@ -154,6 +202,13 @@ function slideAndFade(selector)
 }
 
 $(function(){
+	/*****
+		Intro Animation
+	*****/
+	
+	//Cute little intro animation :3
+	runIntroSequence();
+
 	/*****
 		Setup
 	*****/

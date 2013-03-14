@@ -2,15 +2,17 @@
 
 <html>
 	<head>
-		<title>Character Description Generator</title>
+		<title>characeriz.es | creating descriptions so you don't have to</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link type="text/css" rel="stylesheet" href="css/smoothness/jquery-ui-1.10.1.custom.css"/>
 		<link type="text/css" rel="stylesheet" href="css/bootstrap.css"/>
 		<link type="text/css" rel="stylesheet" href="css/bootstrap-responsive.css"/>
 		<link type="text/css" rel="stylesheet" href="css/main.css"/>
 	</head>
 	<body>
+		<!-- Main Content Area -->
 		<div class="container-fluid pagination-centered">
-			<h1>Character Description Generator</h1>
+			<h1 id="title">characteriz.es</h1>
 			<div id="filterArea" class="row-fluid"></div>
 			<div id="filterActions" class="row-fluid">
 				<button class="btn btn-success span12" id="btn-randomize">Create Description</button>
@@ -21,6 +23,7 @@
 			<div id="results" class="row-fluid"></div>
 		</div>
 		
+		<!-- Character List Area -->
 		<div class="character-floater hidden-phone">
 			<div class="character-floater-header">
 				Characters <span class="character-count badge badge-info">0</span>
@@ -34,6 +37,7 @@
 			</div>
 		</div>
 		
+		<!-- Name & Save Modal -->
 		<div class="modal hide fade" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="saveModalLabel" aria-hidden="true">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -49,6 +53,7 @@
 			</div>
 		</div>
 		
+		<!-- Delete Confirm Modal -->
 		<div class="modal hide fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -63,6 +68,7 @@
 			</div>
 		</div>
 		
+		<!-- Load Confirm Modal -->
 		<div class="modal hide fade" id="loadModal" tabindex="-1" role="dialog" aria-labelledby="loadModalLabel" aria-hidden="true">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -77,6 +83,7 @@
 			</div>
 		</div>
 		
+		<!-- Template: Character entry -->
 		<script id="template-character" type="text/x-handlebars-template">
 			<li class="character">
 				<input type="hidden" value="{{id}}" class="character-id"/>
@@ -85,6 +92,7 @@
 			</li>
 		</script>
 		
+		<!-- Template: Filter group -->
 		<script id="template-group" type="text/x-handlebars-template">
 			<div class="filter-group row-fluid" {{#unless filters}}style="display:none"{{/unless}}>
 				{{#if filters}}
@@ -94,6 +102,7 @@
 			</div>
 		</script>
 		
+		<!-- Template: Individual filter -->
 		<script id="template-filter" type="text/x-handlebars-template">
 			<div class="filter-entry span4">
 			
@@ -109,6 +118,7 @@
 			</div>
 		</script>
 		
+		<!-- Template: Result group -->
 		<script id="template-group-result" type="text/x-handlebars-template">
 			{{#if results}}
 			<div class="group-result row-fluid">
@@ -118,6 +128,7 @@
 			{{/if}}
 		</script>
 		
+		<!-- Template: Individual result -->
 		<script id="template-result" type="text/x-handlebars-template">
 			<div class="result span4" id="result-{{group}}-{{identifier}}">
 				<strong>{{label}}: </strong>{{value}}<br />
@@ -127,7 +138,9 @@
 			</div>
 		</script>
 		
+		<!-- Load in scripts -->
 		<script type="text/javascript" src="js/jquery-1.9.1.js"></script>
+		<script type="text/javascript" src="js/jquery-ui-1.10.1.custom.js"></script>
 		<script type="text/javascript" src="js/bootstrap.js"></script>
 		<script type="text/javascript" src="js/handlebars.js"></script>
 		<script type="text/javascript" src="js/main.js"></script>
