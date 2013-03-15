@@ -44,6 +44,51 @@ function runIntroSequence()
 	$('h1#title span.title-letter').last().animate({
 		"color": "black"
 	}, 200);
+
+}
+
+//Create and send PDF for download
+function downloadCharacterPdf(character)
+{
+	if(character == null || character == "undefined")
+		return false;
+		
+	var doc = new jsPDF();
+	
+	doc.setFontSize(14);
+	
+	var xoffset = 0;
+	var yoffset = 0;
+	
+	var marginLeft = 50;
+	
+	//SEE: http://jspdf.com/
+}
+
+//Gets the data for an image by src
+//Depends on HTML5
+//Returns {dataUrl,width,height}
+function getImageData(url) {
+	//Create URL instance
+	var img = new Image(); 
+	img.src = url;
+
+    // Create an empty canvas element
+    var canvas = document.createElement("canvas");
+    canvas.width = img.width;
+    canvas.height = img.height;
+
+    // Copy the image contents to the canvas
+    var ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0);
+
+    // Get the data-URL formatted image
+    // Firefox supports PNG and JPEG. You could check img.src to
+    // guess the original format, but be aware the using "image/jpg"
+    // will re-encode the image.
+    var dataURL = canvas.toDataURL("image/png");
+
+    return {"dataUrl":dataURL,"width":img.width,"height":img.height};
 }
 
 //Builds the character area
@@ -87,6 +132,9 @@ function loadCharacter(character)
 	resetResults();
 	 //disable save button 
 	$("#btn-saveCharacter").prop("disabled",true).addClass("disabled").html("Saved!");
+ 
+	//Store active character in pointer
+	window.currentCharacter = character;
  
 	//if the filters are visible, hide them. 
 	if($($(".filter-group")[0]).is(":visible"))
@@ -254,7 +302,7 @@ $(function(){
 		$.each(filters, function(idx,filter){
 			filter = $.extend({},window.filterDefaults,filter);
 		
-			if((idx%3) == 0) output += '<div class="row-fluid">';
+			if((idx%3) == 0) output += '<div class="row-fluid filter-row">';
 		
 			var template = Handlebars.compile($("#template-filter").html());
 			output += template($.extend(filter,{"group":group})).trim();
@@ -272,7 +320,7 @@ $(function(){
 		var output = "";
 		
 		$.each(results, function(idx, result) {
-			if((idx%3) == 0) output += '<div class="row-fluid">';
+			if((idx%3) == 0) output += '<div class="row-fluid result-row">';
 		
 			var template = Handlebars.compile($("#template-result").html());
 			output += template(result).trim();
@@ -329,7 +377,7 @@ $(function(){
 	$("#btn-randomize").on("click",function(e){
 		e.preventDefault();
 		slideAndFade($(".filter-group").get().reverse());
-		slideAndFade($(".filter-entry").get().reverse());
+		slideAndFade($(".filter-row").get().reverse());
 		
 		$("#btn-randomize").hide("medium");
 		$("#btn-again,#btn-refilter,#btn-saveCharacter,#results").show("medium");
@@ -346,7 +394,7 @@ $(function(){
 	$("#btn-refilter").on("click",function(e){
 		e.preventDefault();
 		slideAndFade($(".filter-group"));
-		slideAndFade($(".filter-entry"))
+		slideAndFade($(".filter-row"))
 		
 		$("#btn-randomize").show("medium");
 		$("#btn-again,#btn-refilter,#btn-saveCharacter,#results").hide("medium");
@@ -380,7 +428,7 @@ $(function(){
 		//Toggle areas on h3 click
 		.on("click",".filter-group > h3", function(e){
 			e.preventDefault();
-			var order = $(this).parent().find('.filter-entry');
+			var order = $(this).parent().find('.filter-row');
 			if($(order[0]).is(":visible")) order = order.get().reverse();
 			slideAndFade(order);
 		})
